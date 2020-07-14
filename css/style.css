@@ -1,0 +1,160 @@
+body {
+    background-color: #fcfcfc;
+    font-family: "Roboto", sans-serif;
+    color: rgba(0, 0, 0, 0.87);
+}
+
+.alert {
+    display: flex;
+    padding: 13px 16px;
+    font-size: 0.975rem;
+    transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    letter-spacing: 0.01071em;
+    background-color: transparent;
+    margin-bottom: 1rem;
+    font-weight: 400;
+    color: #fff;
+}
+
+.btn-delete, .btn-edit {
+    padding: 0 10px;
+}
+
+.hidden {
+    display: none!important;
+    ;
+}
+
+.totalGeral strong {
+    font-size: 18px;
+    color: #000;
+    font-weight: 700;
+}
+
+.alert-danger {
+    background-color: #EF5350;
+}
+
+.alert-success {
+    background-color: #4CAF50
+}
+
+.nenhumCadastro h5 span {
+    display: block;
+}
+
+.nenhumCadastro h5 .material-icons {
+    color: #4CAF50;
+}
+
+.carregando {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carregando .text {
+    color: #4CAF50;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.enviado {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.enviado .text {
+    color: #4CAF50;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.enviado i {
+    color: #4CAF50;
+}
+
+/* Helpes */
+
+.mt-1 {
+    margin-top: 0.25rem !important;
+}
+
+.mt-2 {
+    margin-top: 0.5rem !important;
+}
+
+.mt-3 {
+    margin-top: 1rem !important;
+}
+
+.mt-4 {
+    margin-top: 1.5rem !important;
+}
+
+.mt-5 {
+    margin-top: 3rem !important;
+}
+
+.mb-1 {
+    margin-bottom: 0.25rem !important;
+}
+
+.mb-2 {
+    margin-bottom: 0.5rem !important;
+}
+
+.mb-3 {
+    margin-bottom: 1rem !important;
+}
+
+.mb-4 {
+    margin-bottom: 1.5rem !important;
+}
+
+.mb-5 {
+    margin-bottom: 3rem !important;
+}
+
+.mr-1 {
+    margin-right: 0.25rem !important;
+}
+
+.mr-2 {
+    margin-right: 0.5rem !important;
+}
+
+.mr-3 {
+    margin-right: 1rem !important;
+}
+
+.mr-4 {
+    margin-right: 1.5rem !important;
+}
+
+.mr-5 {
+    margin-right: 3rem !important;
+}
+
+.ml-1 {
+    margin-left: 0.25rem !important;
+}
+
+.ml-2 {
+    margin-left: 0.5rem !important;
+}
+
+.ml-3 {
+    margin-left: 1rem !important;
+}
+
+.ml-4 {
+    margin-left: 1.5rem !important;
+}
+
+.ml-5 {
+    margin-left: 3rem !important;
+}

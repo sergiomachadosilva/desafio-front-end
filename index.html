@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle de Gastos com Knockoutjs</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="css/style.css" rel="stylesheet" />
+</head>
+
+<body>
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col s12">
+                <ul class="tabs" id="tabs">
+                    <li class="tab col s3">
+                        <a href="#test1" class="active">Lista de Despesas</a>
+                    </li>
+                    <li class="tab col s3">
+                        <a href="#test2">Cadastrar Despesa</a>
+                    </li>
+                    <li class="tab col s3" data-bind="css: {'disabled': listaGastos().length == 0}">
+                        <a href="#test3">Enviar por E-mail</a>
+                    </li>
+                </ul>
+            </div>
+            <div id="test1" class="col s12">
+                <div class="row">
+                    <div class="col s12 mt-3">
+                        <div class="card" data-bind="visible: listaGastos().length > 0">
+                            <div class="card-content">
+                                <div class="card-title">
+                                    Lista de Despesas
+                                </div>
+                                <table class="responsive-table striped">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Descrição</th>
+                                            <th>Categoria</th>
+                                            <th>Data</th>
+                                            <th>Valor</th>
+                                            <th>Ação</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody data-bind="foreach: listaGastos">
+                                        <tr>
+                                            <td data-bind="text : $index() + 1"></td>
+                                            <td data-bind="text: $data.descricao"></td>
+                                            <td data-bind="text: $data.categoriaNome"></td>
+                                            <td data-bind="text: $data.data"></td>
+                                            <td data-bind="text: formtarMoeda($data.valor)"></td>
+                                            <td>
+                                                <a href="#modal1"
+                                                    class="btn btn-small btn-delete blue lighten-1 mr-2 modal-trigger"
+                                                    title="Editar Despesa" data-bind="click: $parent.edit">
+                                                    <i class="material-icons">edit</i></a>
+
+                                                <a href="#" class="btn btn-small btn-edit red lighten-1"
+                                                    title="Excluir Despesa" data-bind="click: $parent.removeGasto"><i
+                                                        class="material-icons">delete</i></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td><span class="right">Total Geral:</span></td>
+                                            <td class="totalGeral">
+                                                <strong span data-bind='text: formtarMoeda(totalGeral())'></strong>
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col s12">
+                        <div class="card" data-bind="visible: listaGastos().length > 0">
+                            <div class="card-content">
+                                <div class="card-title">
+                                    Total por Categoria
+                                </div>
+                                <table class="responsive-table">
+                                    <thead>
+                                        <tr data-bind="foreach: totalPorCategoria">
+                                            <th data-bind="text: nome"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr data-bind="foreach: totalPorCategoria">
+                                            <td data-bind="text: formtarMoeda(valor)"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col s12">
+                        <div class="card nenhumCadastro" data-bind="visible: listaGastos().length == ''">
+                            <div class="card-content">
+                                <h5 class="center-align">
+                                    <span class="mb-3">
+                                        Você não possui nenhuma despesa cadastrada.
+                                    </span>
+                                    <i class="material-icons large">sentiment_very_satisfied</i>
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="test2" class="col s12">
+                <div class="row">
+                    <div class="col s12 mt-3">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="card-title mb-3">
+                                    Adicionar Nova Despesa
+                                </div>
+
+                                <div data-bind="with: alerta">
+                                    <div class="alert" data-bind="text: msg, 
+                                    css: {'alert-danger': (tipo == 'erro'), 'alert-success': (tipo == 'sucesso')},
+                                    visible: mostrar"></div>
+                                </div>
+
+                                <form data-bind="submit: addDespesa">
+                                    <div class="row">
+                                        <div class="input-field col s12 m6 l3">
+                                            <input id="descricao" type="text" class="validate"
+                                                data-bind="value: descricao">
+                                            <label for="descricao">Descrição</label>
+                                        </div>
+
+                                        <div class="input-field col s12 m6 l3">
+                                            <select id="categoriaCadastro"
+                                                data-bind="options: categorias, optionsCaption: 'Selecionar', optionsText: 'name', value: chosenCategorias">
+                                            </select>
+                                            <label>Categoria</label>
+                                        </div>
+
+                                        <div class="input-field col s12 m6 l3">
+                                            <input type="text" id="data" class="datepicker"
+                                                placeholder="Selecionar data" data-bind="value: data">
+                                            <label for="data">Data</label>
+                                        </div>
+
+
+                                        <div class="input-field col s12 m6 l3">
+                                            <input id="valor" type="text" class="validate" data-bind="value: valor">
+                                            <label for="valor">Valor</label>
+                                        </div>
+
+                                    </div>
+
+                                    <button type="submit" class="btn waves-effect waves-light green"
+                                        title="Cadastrar">Cadastrar
+                                        <i class="material-icons right">add</i>
+                                    </button>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="test3" class="col s12">
+                <div class="row">
+                    <div class="col s12 mt-3">
+                        <div class="card" data-bind="visible: listaGastos().length > 0">
+                            <div class="card-content">
+                                <div class="card-title">
+                                    Enviar Despesas por E-Mail
+                                </div>
+
+                                <div data-bind="with: alertaSend">
+                                    <div class="alert" data-bind="text: msg, 
+                            css: {'alert-danger': (tipo == 'erro'), 'alert-success': (tipo == 'sucesso')},
+                            visible: mostrar"></div>
+                                </div>
+
+                                <form data-bind="submit: EnviarEmail">
+                                    <div class="row">
+                                        <div class="input-field col s6 m12 l6">
+                                            <input id="email" type="email" class="validate" data-bind="value: email">
+                                            <label for="email">E-mail</label>
+                                        </div>
+
+                                        <div class="input-field col s12 m12 l6">
+                                            <input id="emailConfirm" type="email" class="validate"
+                                                data-bind="value: emailConfirm">
+                                            <label for="emailConfirm">Repetir E-mail</label>
+                                        </div>
+
+                                    </div>
+                                    <!--data-bind="enable: emailConfirm() == email()"-->
+                                    <button type="submit" data-bind="disable: carregando"
+                                        class="btn waves-effect waves-light green" title="Cadastrar">Enviar
+                                        <i class="material-icons right">send</i>
+                                    </button>
+
+                                </form>
+
+                                <div class="carregando mt-5 mb-3" data-bind="visible: carregando">
+                                    <span class="text mr-3">Enviando E-mail...</span>
+                                    <div class="preloader-wrapper small active" data-bind="css: {'active': carregando}">
+                                        <div class="spinner-layer spinner-green-only">
+                                            <div class="circle-clipper left">
+                                                <div class="circle"></div>
+                                            </div>
+                                            <div class="gap-patch">
+                                                <div class="circle"></div>
+                                            </div>
+                                            <div class="circle-clipper right">
+                                                <div class="circle"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="enviado mt-5 mb-3" data-bind="visible: enviado">
+                                    <span class="text mb-3">E-mail enviado com sucesso.</span>
+                                    <i class="material-icons large">check_circle</i>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Structure -->
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <div class="col s12">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-title">
+                            Atualizar Despesa
+                        </div>
+                        <p class="mb-4" style="color: #455a64 ;">Selecione uma categoria se deseja atualiza-la.</p>
+
+                        <form data-bind="submit: atualizar">
+                            <div class="row">
+
+                                <div class="input-field col s12 m6 l12 xl3">
+                                    <input id="descricaoUpdate" type="text" class="validate disabled" placeholder=""
+                                        data-bind="value: descricaoUpdate">
+                                    <label>Descricao</label>
+                                </div>
+
+                                <div class="input-field col s12 m6 l12 xl3">
+                                    <select id="categoriaUp"
+                                        data-bind="options: categorias, optionsCaption: 'Selecionar', optionsText: 'name', value: chosenCategoriasUpdate">
+                                    </select>
+                                    <label>Categoria</label>
+                                </div>
+
+                                <div class="input-field col s12 m6 l12 xl3">
+                                    <input type="text" id="dataUpdate" class="datepicker"
+                                        placeholder="Selecionar dataUpdate" data-bind="value: dataUpdate">
+                                    <label for="dataUpdate">Data</label>
+                                </div>
+
+
+                                <div class="input-field col s12 m6 l12 xl3">
+                                    <input id="valorUpdate" type="text" class="validate" placeholder=""
+                                        data-bind="value: valorUpdate">
+                                    <label for="valorUpdate">Valor</label>
+                                </div>
+
+                            </div>
+
+                            <button type="submit" class="btn btn-small waves-effect waves-light green"
+                                title="Atualizar">Atualizar
+                                <i class="material-icons right">update</i>
+                            </button>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="col s12">
+                <button type="button" class="modal-close btn-small btn waves-effect waves-light red lighten-1"
+                    title="Sair">Sair
+                    <i class="material-icons right">close</i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <script src="js/jquery.mask.min.js"></script>
+
+    <script src="js/knockout-3.5.1.js"></script>
+    <script src="js/scripts.js"></script>
+    <script src="js/knockout_script.js"></script>
+
+</body>
+
+</html>
