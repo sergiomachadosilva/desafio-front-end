@@ -34,4 +34,4 @@ Framework: [Knockout.js](https://knockoutjs.com/) (obrigatório)
 
 **OBS**.: ​ Não é necessário armazenar em BD
 
-![](https://github.com/sergiomachadosilva/desafio-front-end/css/print.png)
+![](https://github.com/sergiomachadosilva/desafio-front-end/blob/master/css/print.png)
