@@ -87,9 +87,11 @@ function validateEmail(email) {
 }
 
 const listMock = [
-    { id: 1594598348090, descricao: "Viagem para Recife", categoriaNome: "Transporte", categoriaSlug: "transporte", data: "02/07/2020", valor: 745 },
-    { id: 1594598777600, descricao: "Manutenção aparelho", categoriaNome: "Saúde", categoriaSlug: "saude", data: "03/07/2020", valor: 150.50 },
-    { id: 1594598929972, descricao: "Saída com os amigos", categoriaNome: "Lazer", categoriaSlug: "lazer", data: "04/07/2020", valor: 110.85 },
+    { id: 1594598348090, descricao: "Energia", categoriaNome: "Moradia", categoriaSlug: "moradia", data: "02/07/2020", valor: 190.00 },
+    { id: 1594598777600, descricao: "Dentista", categoriaNome: "Saúde", categoriaSlug: "saude", data: "03/07/2020", valor: 150.50 },
+    { id: 1594598929972, descricao: "Shopping", categoriaNome: "Lazer", categoriaSlug: "lazer", data: "04/07/2020", valor: 110.50 },
+    { id: 1594722080882, descricao: "Água", categoriaNome: "Moradia", categoriaSlug: "moradia", data: "05/07/2020", valor: 70.00 },
+    { id: 1594722248512, descricao: "Internet", categoriaNome: "Moradia", categoriaSlug: "moradia", data: "05/07/2020", valor: 70.00 },
 ]
 
 function getGasto(id) {

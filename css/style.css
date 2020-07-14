@@ -77,7 +77,27 @@ body {
     color: #4CAF50;
 }
 
+.cardCategoria {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+}
+
+.cardCategoria .card-title {
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.cardCategoria .valor {
+    font-size: 18px;
+    font-weight: 700;
+}
+
 /* Helpes */
+
+.mt-0 {
+    margin-top: 0 !important;
+}
 
 .mt-1 {
     margin-top: 0.25rem !important;
@@ -97,6 +117,10 @@ body {
 
 .mt-5 {
     margin-top: 3rem !important;
+}
+
+.mb-0 {
+    margin-bottom: 0 !important;
 }
 
 .mb-1 {
